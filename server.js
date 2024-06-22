@@ -9,14 +9,15 @@ require('dotenv').config();
 const personRoutes = require('./routes/personRoutes');
 const menuItemsRoutes = require('./routes/menuItemsRoutes');
 
+const port = process.env.PORT || 4000;
+
 app.use('/person', personRoutes);
 app.use('/menu', menuItemsRoutes);
 
 app.get('/', function(req, res){
     res.send("Welcome to our Hotel")
 })
-const PORT = process.env.PORT || 4000;
 
-app.listen(PORT, () => {
+app.listen(port, () => {
     console.log("Server is listening on port 3000")
 });
