@@ -4,10 +4,13 @@ const db = require('./db');
 const bodyParser = require('body-parser');
 app.use(bodyParser.json()); //req.body
 require('dotenv').config();
+const passport = require('./auth.js');
+
 
 //import the router files 
 const personRoutes = require('./routes/personRoutes');
 const menuItemsRoutes = require('./routes/menuItemsRoutes');
+const Person = require("./models/Persons");
 
 const port = process.env.PORT || 4000;
 
@@ -19,12 +22,15 @@ const logRequest = (req, res, next) => {
 
 app.use(logRequest);
 
-app.get('/',function(req, res){
+app.use(passport.initialize());
+const localAuthMiddleware = passport.authenticate('local', {session : false});
+
+app.get('/', localAuthMiddleware,function(req, res){
     res.send("Welcome to our Hotel")
 })
 
-app.use('/person', personRoutes);
-app.use('/menu', menuItemsRoutes);
+app.use('/person', localAuthMiddleware, personRoutes);
+app.use('/menu', localAuthMiddleware, menuItemsRoutes);
 
 app.listen(port, () => {
     console.log("Server is listening on port 3000")
