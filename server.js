@@ -25,12 +25,12 @@ app.use(logRequest);
 app.use(passport.initialize());
 const localAuthMiddleware = passport.authenticate('local', {session : false});
 
-app.get('/', localAuthMiddleware,function(req, res){
+app.get('/', function(req, res){
     res.send("Welcome to our Hotel")
 })
 
 app.use('/person', localAuthMiddleware, personRoutes);
-app.use('/menu', localAuthMiddleware, menuItemsRoutes);
+app.use('/menu', menuItemsRoutes);
 
 app.listen(port, () => {
     console.log("Server is listening on port 3000")
