@@ -29,7 +29,7 @@ app.get('/', function(req, res){
     res.send("Welcome to our Hotel")
 })
 
-app.use('/person', localAuthMiddleware, personRoutes);
+app.use('/person', personRoutes);
 app.use('/menu', menuItemsRoutes);
 
 app.listen(port, () => {
